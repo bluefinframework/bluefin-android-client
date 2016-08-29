@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+
+Properties properties = new Properties()
+try {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+} catch (Exception e) {
+    System.out.println("please add local.properties file")
+}
+
+Properties keyProperties = new Properties()
+try {
+    keyProperties.load(project.rootProject.file('key.properties').newDataInputStream())
+} catch (Exception e) {
+    System.out.println("read key.properties failed, use debug")
+    keyProperties.setProperty("test", "true")
+    keyProperties.setProperty("storePassword", "bluefinclient")
+    keyProperties.setProperty("keyAlias", "magicbluefin")
+    keyProperties.setProperty("keyPassword", "bluefinclient")
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        applicationId "cn.saymagic.bluefinclient"
+        minSdkVersion 14
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+
+
+    signingConfigs {
+        release {
+            try {
+                storeFile "true".equals(keyProperties.getProperty("test", "false"))?  project.rootProject.file("bluefin-client-release.jks") : project.rootProject.file("bluefin-client-test.jks")
+                storePassword keyProperties.hasProperty("storePassword") ? keyProperties.getProperty("storePassword") : System.getenv("BLUEFIN_CLIENT_STORE_PASSWORD")
+                keyAlias keyProperties.hasProperty("keyAlias") ? keyProperties.getProperty("keyAlias") : System.getenv("BLUEFIN_CLIENT_KEY_ALIAS")
+                keyPassword keyProperties.hasProperty("keyPassword") ? keyProperties.getProperty("keyPassword") : System.getenv("BLUEFIN_CLIENT_KEY_PASSWORD")
+            } catch (ex) {
+                logger.warning("What's up man? For release builds, you must define KEYSTORE_PASSWORD and KEY_PASSWORD.")
+                ex.printStackTrace()
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.facebook.fresco:fresco:0.13.0'
+}
