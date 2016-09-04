@@ -1,30 +1,25 @@
 language: android
-
 jdk:
-  - oraclejdk8
-
+- oraclejdk8
 env:
   global:
-    # Add this
-    - MALLOC_ARENA_MAX=2
-    - ADB_INSTALL_TIMEOUT=10xx
-
+  - MALLOC_ARENA_MAX=2
+  - ADB_INSTALL_TIMEOUT=10xx
 android:
   components:
   - build-tools-24.0.0
   - android-24
   - extra-android-m2repository
   - extra-android-support
-
 cache: false
 sudo: required
-
 before_install:
+- openssl aes-256-cbc -K $encrypted_2747b2c6347b_key -iv $encrypted_2747b2c6347b_iv
+  -in bluefin-client-release.jks.enc -out bluefin-client-release.jks -d
 - chmod +x gradlew
 - gem install fir-cli
-
 script:
-- "./gradlew aR"
-
+- ./gradlew aR
 after_success:
-- fir p app/build/outputs/apk/app-release.apk -T ${FIR_TOKEN} -c "Upload by Travis CI - ${TRAVIS_BUILD_NUMBER}"
+- fir p app/build/outputs/apk/app-release.apk -T ${FIR_TOKEN} -c "Upload by Travis
+  CI - ${TRAVIS_BUILD_NUMBER}"
