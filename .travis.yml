@@ -1,0 +1,30 @@
+language: android
+
+jdk:
+  - oraclejdk8
+
+env:
+  global:
+    # Add this
+    - MALLOC_ARENA_MAX=2
+    - ADB_INSTALL_TIMEOUT=10xx
+
+android:
+  components:
+  - build-tools-24.0.0
+  - android-24
+  - extra-android-m2repository
+  - extra-android-support
+
+cache: false
+sudo: required
+
+before_install:
+- chmod +x gradlew
+- gem install fir-cli
+
+script:
+- "./gradlew aR"
+
+after_success:
+- fir p app/build/outputs/apk/app-release.apk -T ${FIR_TOKEN} -c "Upload by Travis CI - ${TRAVIS_BUILD_NUMBER}"

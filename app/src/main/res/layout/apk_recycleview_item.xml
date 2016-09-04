@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:id="@+id/apk_item_containter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/apk_item_bg"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/apk_icon"
+            android:layout_width="@dimen/material_32dp"
+            android:layout_height="@dimen/material_32dp"
+            android:layout_centerVertical="true" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/material_16dp"
+            android:layout_toRightOf="@+id/apk_icon"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/apk_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/material_16sp" />
+
+            <TextView
+                android:id="@+id/apk_version_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/material_12sp" />
+
+            <TextView
+                android:id="@+id/apk_package_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/material_12sp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</merge>

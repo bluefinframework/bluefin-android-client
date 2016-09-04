@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">BluefinClient</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="apk_empty_tip">服务器无应用</string>
+
+    <string name="login_menu_item_connect">连接</string>
+    <string name="login_view_connecting">连接中...</string>
+    <string name="login_view_server_url">请输入Bluefin Server的服务器地址</string>
+
+    <!-- 错误提示-->
+    <string name="error_empty">无错误</string>
+    <string name="error_url_error">服务器地址无效</string>
+    <string name="error_cannot_connect">服务器无法连接</string>
+    <string name="error_connect_timeout">连接服务器超时</string>
+    <string name="error_unknow">未知错误,请稍后重试</string>
+    <string name="error_no_network">网络连接不可用,请稍后重试</string>
 </resources>
