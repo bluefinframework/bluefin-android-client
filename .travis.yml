@@ -19,6 +19,7 @@ before_install:
 - chmod +x gradlew
 - gem install fir-cli
 script:
+- ./gradlew testDebugUnitTest
 - ./gradlew aR
 after_success:
 - fir p app/build/outputs/apk/app-release.apk -T ${FIR_TOKEN} -c "Upload by Travis
