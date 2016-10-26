@@ -1,5 +1,7 @@
 package cn.saymagic.bluefinclient.presenter;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import cn.saymagic.bluefinclient.data.ServerSession;
+import cn.saymagic.bluefinclient.data.remote.ServerSession;
 import cn.saymagic.bluefinclient.ui.splash.SplashContract;
 import cn.saymagic.bluefinclient.ui.splash.SplashPresenter;
 import cn.saymagic.bluefinsdk.entity.PingResult;
@@ -62,4 +64,8 @@ public class SplashPresenterTest {
         mPresenter.unsubscribe();
     }
 
+    @Test
+    public void testa() {
+        MatcherAssert.assertThat("saymagic", CoreMatchers.containsString("magic"));
+    }
 }

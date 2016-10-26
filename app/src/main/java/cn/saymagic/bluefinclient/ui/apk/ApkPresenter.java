@@ -6,7 +6,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import cn.saymagic.bluefinclient.data.model.Apk;
-import cn.saymagic.bluefinclient.data.remote.ApkRepositoryContract;
+import cn.saymagic.bluefinclient.data.remote.ServerSessionContract;
 import cn.saymagic.bluefinclient.error.BluefinException;
 import cn.saymagic.bluefinclient.rx.BackgroundJobTransformer;
 import rx.Subscriber;
@@ -18,14 +18,14 @@ import rx.subscriptions.CompositeSubscription;
  */
 public class ApkPresenter implements ApkContract.IApkPresenter {
 
-    private ApkRepositoryContract mApkContract;
+    private ServerSessionContract mServerContract;
 
     private WeakReference<ApkContract.IApkView> mView;
 
     private CompositeSubscription mCompositeSubscription;
 
-    public ApkPresenter(@NonNull ApkRepositoryContract contract, @NonNull ApkContract.IApkView view) {
-        this.mApkContract = contract;
+    public ApkPresenter(@NonNull ServerSessionContract contract, @NonNull ApkContract.IApkView view) {
+        this.mServerContract = contract;
         this.mView = new WeakReference<ApkContract.IApkView>(view);
         view.setPresenter(this);
         mCompositeSubscription = new CompositeSubscription();
@@ -43,11 +43,19 @@ public class ApkPresenter implements ApkContract.IApkPresenter {
 
     @Override
     public void loadApks() {
-        Subscription subscription = mApkContract.loadAllApks()
+        Subscription subscription = mServerContract.loadAllApks()
                 .toList()
                 .compose(new BackgroundJobTransformer())
                 .subscribe(new ApkLoadSubscriber());
         mCompositeSubscription.add(subscription);
+    }
+
+    @Override
+    public void signout() {
+        mServerContract.setServerUrl("");
+        if (mView.get() != null) {
+            mView.get().finishAndSwitchToLogin();
+        }
     }
 
     class ApkLoadSubscriber extends Subscriber<List<Apk>> {

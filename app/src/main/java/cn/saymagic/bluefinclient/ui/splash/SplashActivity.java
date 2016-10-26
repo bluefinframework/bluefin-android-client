@@ -3,7 +3,7 @@ package cn.saymagic.bluefinclient.ui.splash;
 import android.os.Bundle;
 
 import cn.saymagic.bluefinclient.R;
-import cn.saymagic.bluefinclient.data.ServerSession;
+import cn.saymagic.bluefinclient.data.remote.ServerSessionContract;
 import cn.saymagic.bluefinclient.ui.BaseActivity;
 import cn.saymagic.bluefinclient.ui.UIController;
 
@@ -18,7 +18,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.Splas
 
     @Override
     protected void initView() {
-        new SplashPresenter(this, ServerSession.getInstance()).subscribe();
+        new SplashPresenter(this, ServerSessionContract.INSTANCE).subscribe();
     }
 
     @Override

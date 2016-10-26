@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
-import cn.saymagic.bluefinclient.data.ServerSession;
+import cn.saymagic.bluefinclient.data.remote.ServerSession;
 import cn.saymagic.bluefinsdk.entity.PingResult;
 import rx.Subscriber;
 import rx.Subscription;

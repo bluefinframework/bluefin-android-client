@@ -17,11 +17,15 @@ public interface ApkContract {
 
         void showErrorTip(int tipId);
 
+        void finishAndSwitchToLogin();
+
     }
 
     public interface IApkPresenter extends IPresenter {
 
         void loadApks();
+
+        void signout();
 
     }
 }

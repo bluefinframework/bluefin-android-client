@@ -4,6 +4,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -13,8 +15,9 @@ import butterknife.BindView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cn.saymagic.bluefinclient.R;
 import cn.saymagic.bluefinclient.data.model.Apk;
-import cn.saymagic.bluefinclient.data.remote.ApkRepositoryContract;
+import cn.saymagic.bluefinclient.data.remote.ServerSessionContract;
 import cn.saymagic.bluefinclient.ui.BaseActivity;
+import cn.saymagic.bluefinclient.ui.UIController;
 import cn.saymagic.bluefinclient.ui.common.widget.RecyclerViewEmptySupport;
 import cn.saymagic.bluefinclient.ui.common.widget.SpacesItemDecoration;
 import cn.saymagic.bluefinclient.util.UIUtil;
@@ -51,7 +54,7 @@ public class ApkActivity extends BaseActivity implements ApkContract.IApkView, S
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
         }
-        new ApkPresenter(ApkRepositoryContract.INSTANCE, this).subscribe();
+        new ApkPresenter(ServerSessionContract.INSTANCE, this).subscribe();
         mRecycleView.setEmptyView(mEmptyView);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -59,6 +62,20 @@ public class ApkActivity extends BaseActivity implements ApkContract.IApkView, S
         mRecycleView.addItemDecoration(new SpacesItemDecoration(UIUtil.dp2px(5)));
         mAdapter = new ApkAdapter(this, Collections.<Apk>emptyList());
         mRecycleView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.apk, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menu_item_sign_out) {
+            mPresenter.signout();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -103,5 +120,11 @@ public class ApkActivity extends BaseActivity implements ApkContract.IApkView, S
     public void showErrorTip(int tipId) {
         new SweetAlertDialog(this, SweetAlertDialog.ERROR_TYPE)
                 .setTitleText(getString(tipId)).show();
+    }
+
+    @Override
+    public void finishAndSwitchToLogin() {
+        UIController.openLoginActivity(this);
+        this.finish();
     }
 }

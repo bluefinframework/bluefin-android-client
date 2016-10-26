@@ -1,12 +1,17 @@
 package cn.saymagic.bluefinclient.presenter;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import cn.saymagic.bluefinclient.data.ServerSession;
+import java.util.List;
+
+import cn.saymagic.bluefinclient.data.remote.ServerSession;
 import cn.saymagic.bluefinclient.rx.RxUnitTestTools;
 import cn.saymagic.bluefinclient.ui.login.LoginContract;
 import cn.saymagic.bluefinclient.ui.login.LoginPresenter;
@@ -16,6 +21,7 @@ import rx.Observable;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,12 +37,29 @@ public class LoginPresenterTest {
     @Mock
     private ServerSession mServerSession;
 
+    @Mock
     private LoginPresenter mLoginPresenter;
 
     @Before
     public void setUp() {
         RxUnitTestTools.openRxTools();
         mLoginPresenter = new LoginPresenter(mView, mServerSession);
+    }
+
+    @Test
+    @Ignore
+    public void testLoginSuccess1() {
+
+        LoginPresenter loginPresenter = mock(LoginPresenter.class);
+
+        List list = Mockito.mock(List.class);
+
+        Mockito.when(list.size()).thenReturn(1);
+
+        Mockito.verify(list).add(Matchers.anyObject());
+        when(loginPresenter.test11()).thenReturn(1);
+
+        verify(loginPresenter, never()).test11();
     }
 
     @Test

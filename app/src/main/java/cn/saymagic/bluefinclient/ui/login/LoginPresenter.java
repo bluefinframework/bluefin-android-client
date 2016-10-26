@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.lang.ref.WeakReference;
 
-import cn.saymagic.bluefinclient.data.ServerSession;
+import cn.saymagic.bluefinclient.data.remote.ServerSession;
 import cn.saymagic.bluefinclient.error.BluefinException;
 import cn.saymagic.bluefinsdk.entity.PingResult;
 import rx.Subscriber;
@@ -47,6 +47,10 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
     @Override
     public void unsubscribe() {
         mCompositeSubscription.clear();
+    }
+
+    public int test11() {
+        return 1;
     }
 
     class LoginSubscriber extends Subscriber<PingResult> {

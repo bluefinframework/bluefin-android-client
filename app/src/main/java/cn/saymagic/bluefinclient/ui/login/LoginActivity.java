@@ -15,7 +15,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import cn.saymagic.bluefinclient.R;
-import cn.saymagic.bluefinclient.data.ServerSession;
+import cn.saymagic.bluefinclient.data.remote.ServerSessionContract;
 import cn.saymagic.bluefinclient.ui.BaseActivity;
 import cn.saymagic.bluefinclient.ui.UIController;
 
@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.ILoginV
 
     @Override
     protected void initView() {
-        new LoginPresenter(this, ServerSession.getInstance()).subscribe();
+        new LoginPresenter(this, ServerSessionContract.INSTANCE).subscribe();
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
