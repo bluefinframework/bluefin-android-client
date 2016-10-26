@@ -11,13 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
-import com.bumptech.glide.Glide;
 
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.saymagic.bluefinclient.R;
+import cn.saymagic.bluefinclient.data.local.ImageLoader;
 import cn.saymagic.bluefinclient.data.model.Apk;
 import cn.saymagic.bluefinclient.ui.UIController;
 import cn.saymagic.bluefinclient.ui.common.IAdapterView;
@@ -62,10 +62,10 @@ public class ApkItemView extends FrameLayout implements IAdapterView<Apk> {
 
     @Override
     public void bind(@NonNull final Apk apk) {
-        Glide.with(getContext())
-                .load(apk.icon)
-                .placeholder(TextDrawable.builder().buildRect(String.valueOf(apk.name.charAt(0)), Color.GRAY))
-                .into(apkIcon);
+        ImageLoader.INSTANCE.load(getContext(),
+                apk.icon,
+                TextDrawable.builder().buildRect(String.valueOf(apk.name.charAt(0)), Color.GRAY),
+                apkIcon);
 
         apkName.setText(apk.name + " [ " + apk.versionName + "-" + apk.versionCode + "]");
         apkPackageName.setText(apk.packageName);

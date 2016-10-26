@@ -80,7 +80,7 @@ public class ApkPresenterTest {
     public void testSignout() {
         mApkPresenter.signout();
 
-        verify(mServerSession).setServerUrl("");
+        verify(mServerSession).saveServerUrl("");
         verify(mApkView).finishAndSwitchToLogin();
     }
     @After

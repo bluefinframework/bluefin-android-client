@@ -11,7 +11,7 @@ public interface ServerSessionContract {
 
     Observable<PingResult> login(final String serverUrl);
 
-    void setServerUrl(String serverUrl);
+    void saveServerUrl(String serverUrl);
 
     String getServerUrl();
 

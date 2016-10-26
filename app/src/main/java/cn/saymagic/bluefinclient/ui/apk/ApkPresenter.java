@@ -52,7 +52,7 @@ public class ApkPresenter implements ApkContract.IApkPresenter {
 
     @Override
     public void signout() {
-        mServerContract.setServerUrl("");
+        mServerContract.saveServerUrl("");
         if (mView.get() != null) {
             mView.get().finishAndSwitchToLogin();
         }

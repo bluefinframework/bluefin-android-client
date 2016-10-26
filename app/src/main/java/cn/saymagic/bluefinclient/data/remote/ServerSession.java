@@ -52,13 +52,13 @@ public class ServerSession implements ServerSessionContract {
                 .doOnNext(new Action1<PingResult>() {
                     @Override
                     public void call(PingResult pingResult) {
-                        setServerUrl(serverUrl);
+                        saveServerUrl(serverUrl);
                     }
                 });
     }
 
     @Override
-    public void setServerUrl(String serverUrl) {
+    public void saveServerUrl(String serverUrl) {
         CacheContract.INSTANCE.save(SERVER_URL_CACHE_KEY, serverUrl);
     }
 
