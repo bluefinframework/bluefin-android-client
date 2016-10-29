@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,10 +17,12 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.saymagic.bluefinclient.R;
-import cn.saymagic.bluefinclient.data.local.ImageLoader;
 import cn.saymagic.bluefinclient.data.model.Apk;
-import cn.saymagic.bluefinclient.ui.UIController;
+import cn.saymagic.bluefinclient.image.ImageLoaderContract;
+import cn.saymagic.bluefinclient.ui.apk.itemview.ApkItemViewContract;
+import cn.saymagic.bluefinclient.ui.apk.itemview.ApkItemViewPresenter;
 import cn.saymagic.bluefinclient.ui.common.IAdapterView;
 import cn.saymagic.bluefinclient.util.DateUtil;
 import cn.saymagic.bluefinclient.util.UIUtil;
@@ -27,7 +30,7 @@ import cn.saymagic.bluefinclient.util.UIUtil;
 /**
  * Created by saymagic on 16/9/1.
  */
-public class ApkItemView extends FrameLayout implements IAdapterView<Apk> {
+public class ApkItemView extends FrameLayout implements IAdapterView<Apk>, ApkItemViewContract.IApkItemView {
 
 
     @BindView(R.id.apk_icon)
@@ -40,7 +43,12 @@ public class ApkItemView extends FrameLayout implements IAdapterView<Apk> {
     TextView apkPackageName;
     @BindView(R.id.apk_item_containter)
     View apkContainter;
+    @BindView(R.id.apk_more_version)
+    Button apkMoreVersionButton;
 
+    private Apk mApk;
+
+    private ApkItemViewContract.IApkItemViewPresenter mPresenter;
 
     private static final int PADDING = UIUtil.dp2px(5);
 
@@ -62,28 +70,33 @@ public class ApkItemView extends FrameLayout implements IAdapterView<Apk> {
 
     @Override
     public void bind(@NonNull final Apk apk) {
-        ImageLoader.INSTANCE.load(getContext(),
+        this.mApk = apk;
+        ImageLoaderContract.INSTANCE.load(getContext(),
                 apk.icon,
                 TextDrawable.builder().buildRect(String.valueOf(apk.name.charAt(0)), Color.GRAY),
                 apkIcon);
 
-        apkName.setText(apk.name + " [ " + apk.versionName + "-" + apk.versionCode + "]");
+        apkName.setText(apk.name + " [ " + apk.versionName + " / " + apk.versionCode + "]");
         apkPackageName.setText(apk.packageName);
         apkVersionInfo.setText(DateUtil.getDateString(new Date(apk.updateTime)));
+        apkContainter.setClickable(true);
         if (apk.installed) {
             apkContainter.setBackgroundResource(R.drawable.apk_item_bg);
-            apkContainter.setClickable(true);
-            apkContainter.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (apk.launchIntent != null) {
-                        UIController.openActivityByIntent(getContext(), apk.launchIntent);
-                    }
-                }
-            });
         } else {
             apkContainter.setBackgroundResource(R.drawable.apk_item_gray_bg);
         }
+        new ApkItemViewPresenter(this, getContext(), mApk).subscribe();
+    }
 
+    @Override
+    public void setPresenter(ApkItemViewContract.IApkItemViewPresenter presenter) {
+        this.mPresenter = presenter;
+    }
+
+    @OnClick (value = {R.id.apk_more_version, R.id.apk_item_containter})
+    public void onViewClick(View v) {
+        if (mPresenter != null) {
+            mPresenter.onClick(v);
+        }
     }
 }

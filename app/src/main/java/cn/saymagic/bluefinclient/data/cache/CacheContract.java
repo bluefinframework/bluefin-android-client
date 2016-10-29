@@ -9,6 +9,6 @@ public interface CacheContract {
 
     String get(String key);
 
-    CacheContract INSTANCE = CacheManager.getInstance();
+    CacheContract INSTANCE = SpCacheManager.getInstance();
 
 }

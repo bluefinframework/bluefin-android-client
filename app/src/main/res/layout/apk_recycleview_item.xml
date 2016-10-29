@@ -10,8 +10,8 @@
 
         <ImageView
             android:id="@+id/apk_icon"
-            android:layout_width="@dimen/material_32dp"
-            android:layout_height="@dimen/material_32dp"
+            android:layout_width="@dimen/material_48dp"
+            android:layout_height="@dimen/material_48dp"
             android:layout_centerVertical="true" />
 
         <LinearLayout
@@ -42,5 +42,13 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/apk_more_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/material_8dp"
+            android:text="@string/apk_more_version" />
     </RelativeLayout>
 </merge>

@@ -22,12 +22,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:label,android:allowBackup">
-        <activity android:name=".ui.apk.ApkActivity"></activity>
+        <activity android:name=".ui.apk.ApkActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:theme="@style/LoginTheme">
-
-        </activity>
+            android:theme="@style/LoginTheme"></activity>
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/SplashTheme">
@@ -36,7 +34,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".ui.download.ApkDownloadActivity"></activity>
     </application>
 
 </manifest>

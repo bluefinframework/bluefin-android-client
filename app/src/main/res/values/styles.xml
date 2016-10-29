@@ -36,4 +36,16 @@
         <item name="android:labelTextSize">@dimen/material_16sp</item>
     </style>
 
+    <declare-styleable name="DownloadProgressView">
+        <attr name="progressCircleRadius" format="dimension"/>
+        <attr name="strokeWidth" format="dimension"/>
+        <attr name="lineWidth" format="dimension"/>
+        <attr name="progressDuration" format="integer"/>
+        <attr name="resultDuration" format="integer"/>
+        <attr name="progressBackgroundColor" format="color"/>
+        <attr name="drawingColor" format="color"/>
+        <attr name="progressColor" format="color"/>
+        <attr name="circleBackgroundColor" format="color"/>
+        <attr name="overshootValue" format="float"/>
+    </declare-styleable>
 </resources>

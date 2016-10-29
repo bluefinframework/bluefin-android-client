@@ -49,10 +49,6 @@ public class LoginPresenter implements LoginContract.ILoginPresenter {
         mCompositeSubscription.clear();
     }
 
-    public int test11() {
-        return 1;
-    }
-
     class LoginSubscriber extends Subscriber<PingResult> {
 
         @Override

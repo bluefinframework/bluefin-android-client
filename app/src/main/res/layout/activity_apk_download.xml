@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="40dp">
+
+    <TextView
+        android:id="@+id/download_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_24dp"
+        android:textAlignment="center"
+        android:textSize="@dimen/material_16sp" />
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/progress_bar"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/material_24dp"
+
+
+        custom:progress_reached_bar_height="5dp"
+        custom:progress_reached_color="#3498DB"
+
+        custom:progress_text_color="#3498DB"
+        custom:progress_text_offset="1dp"
+        custom:progress_text_size="20sp"
+        custom:progress_text_visibility="visible"
+
+        custom:progress_unreached_bar_height="5dp"
+        custom:progress_unreached_color="#CCCCCC" />
+
+    <Button
+        android:id="@+id/install_apk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/material_24dp" />
+</LinearLayout>

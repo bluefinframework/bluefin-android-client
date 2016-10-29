@@ -1,4 +1,4 @@
-package cn.saymagic.bluefinclient.data.local;
+package cn.saymagic.bluefinclient.image;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import java.io.File;
 
 import cn.saymagic.bluefinclient.BluefinApplication;
+import cn.saymagic.bluefinclient.data.model.to.ApkTransmission;
 import cn.saymagic.bluefinclient.util.EncryUtil;
 import cn.saymagic.bluefinsdk.entity.BluefinApkData;
 
@@ -71,6 +72,14 @@ public class Apk {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    public ApkTransmission toTransmission() {
+        ApkTransmission transmission = new ApkTransmission();
+        transmission.setApkUrl(apkUrl);
+        transmission.setName(name);
+        transmission.setPackageName(packageName);
+        return transmission;
     }
 
 }

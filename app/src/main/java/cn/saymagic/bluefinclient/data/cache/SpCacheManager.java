@@ -9,20 +9,20 @@ import cn.saymagic.bluefinclient.BluefinApplication;
 /**
  * Created by saymagic on 16/9/4.
  */
-public class CacheManager implements CacheContract {
+public class SpCacheManager implements CacheContract {
 
-    private static volatile CacheManager INSTANCE;
+    private static volatile SpCacheManager INSTANCE;
 
-    public static CacheManager getInstance() {
+    public static SpCacheManager getInstance() {
         if (INSTANCE == null) {
-            synchronized (CacheManager.class) {
-                INSTANCE = new CacheManager();
+            synchronized (SpCacheManager.class) {
+                INSTANCE = new SpCacheManager();
             }
         }
         return INSTANCE;
     }
 
-    private CacheManager() {
+    private SpCacheManager() {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(BluefinApplication.getContext());
     }
 
