@@ -4,17 +4,19 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by saymagic on 16/6/4.
  */
 public class EncryUtil {
 
-    private static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5',
-            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+    private static final char[] DIGITS_LOWER = {'0', '1', '2', '3', '4', '5',
+            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
     /**
      * To calculate a file's md5
+     *
      * @param file origin file to calculate md5
      * @return md5 value
      */
@@ -36,9 +38,25 @@ public class EncryUtil {
         }
     }
 
+    public static String getMD5(String s) {
+        return getMd5(s.getBytes());
+    }
+
+    public static String getMd5(byte[] bytes) {
+        try {
+            MessageDigest algorithm = MessageDigest.getInstance("MD5");
+            algorithm.reset();
+            algorithm.update(bytes);
+            return toHexString(algorithm.digest());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static String toHexString(byte[] bytes) {
         StringBuilder hexString = new StringBuilder();
-        for (byte b: bytes) {
+        for (byte b : bytes) {
             hexString.append(byteHEX(b, DIGITS_LOWER));
         }
         return hexString.toString();

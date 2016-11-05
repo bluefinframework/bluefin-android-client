@@ -3,10 +3,11 @@ package cn.saymagic.bluefinclient.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.widget.Toast;
 
-import cn.saymagic.bluefinclient.data.model.to.ApkTransmission;
+import cn.saymagic.bluefinclient.data.model.Apk;
 import cn.saymagic.bluefinclient.ui.apk.ApkActivity;
 import cn.saymagic.bluefinclient.ui.download.ApkDownloadActivity;
 import cn.saymagic.bluefinclient.ui.login.LoginActivity;
@@ -32,14 +33,22 @@ public class UIController {
         context.startActivity(intent);
     }
 
-    public static void openDownloadActivity(@NonNull Context context, ApkTransmission transmission) {
+    public static void openDownloadActivity(@NonNull Context context, Apk apk) {
         Intent intent = new Intent(context, ApkDownloadActivity.class);
-        intent.putExtra(EXTRA_APK_TRANSMISSION, transmission);
+        intent.putExtra(EXTRA_APK_TRANSMISSION, apk);
         context.startActivity(intent);
     }
 
     public static void showToast(@NonNull Context context, String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+    }
+
+    public static void openInstallActivity(@NonNull Context context, @NonNull String path) {
+        Intent intentTo = new Intent();
+        intentTo.setAction(Intent.ACTION_VIEW);
+        intentTo.setDataAndType(Uri.parse("file://" + path),
+                "application/vnd.android.package-archive");
+        openActivityByIntent(context, intentTo);
     }
 
     public static void finishActivity(@NonNull Activity activity) {

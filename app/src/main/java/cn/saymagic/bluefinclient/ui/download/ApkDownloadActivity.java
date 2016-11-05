@@ -1,18 +1,26 @@
 package cn.saymagic.bluefinclient.ui.download;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.saymagic.bluefinclient.R;
-import cn.saymagic.bluefinclient.data.download.DownloadContract;
-import cn.saymagic.bluefinclient.data.model.to.ApkTransmission;
+import cn.saymagic.bluefinclient.data.download.DownloadPerformContract;
+import cn.saymagic.bluefinclient.data.download.DownloadSaveContract;
+import cn.saymagic.bluefinclient.data.model.Apk;
+import cn.saymagic.bluefinclient.image.ImageLoaderContract;
 import cn.saymagic.bluefinclient.ui.BaseActivity;
 import cn.saymagic.bluefinclient.ui.UIController;
 
@@ -20,7 +28,11 @@ public class ApkDownloadActivity extends BaseActivity implements ApkDownloadCont
 
     private ApkDownloadContract.IDownloadPresenter mPresenter;
 
-    private int val = 0;
+    @BindView(R.id.download_icon)
+    ImageView mIcon;
+
+    @BindView(R.id.download_version)
+    TextView mVersion;
 
     @BindView(R.id.progress_bar)
     NumberProgressBar mProgressBar;
@@ -33,19 +45,31 @@ public class ApkDownloadActivity extends BaseActivity implements ApkDownloadCont
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void initView() {
         Intent intent = getIntent();
-        ApkTransmission apkTransmission = intent.getParcelableExtra(UIController.EXTRA_APK_TRANSMISSION);
-        if (apkTransmission == null) {
+        Apk apk = intent.getParcelableExtra(UIController.EXTRA_APK_TRANSMISSION);
+        if (apk == null) {
             UIController.finishActivity(this);
             return;
         }
-        new ApkDownloadPresenter(this, apkTransmission, this, DownloadContract.URL_DOWNLOADER).subscribe();
-        mTitle.setText(apkTransmission.getName());
+        new ApkDownloadPresenter(this,
+                apk,
+                this,
+                DownloadPerformContract.URL_DOWNLOADER,
+                DownloadSaveContract.DEFAULT).subscribe();
+        mTitle.setText(apk.name);
+        mVersion.setText(apk.versionName);
+        ImageLoaderContract.INSTANCE.load(this,
+                apk.icon,
+                TextDrawable.builder().buildRect(String.valueOf(TextUtils.isEmpty(apk.name) ? "" : apk.name.charAt(0)), Color.GRAY),
+                mIcon);
     }
 
     @Override
@@ -60,6 +84,7 @@ public class ApkDownloadActivity extends BaseActivity implements ApkDownloadCont
 
     @Override
     public void onDownloadFinished() {
+        mProgressBar.setVisibility(View.GONE);
         mInstallButton.setVisibility(View.VISIBLE);
     }
 
@@ -74,12 +99,17 @@ public class ApkDownloadActivity extends BaseActivity implements ApkDownloadCont
     }
 
     @Override
+    public void doFinish() {
+        UIController.finishActivity(this);
+    }
+
+    @Override
     public void setPresenter(ApkDownloadContract.IDownloadPresenter presenter) {
         this.mPresenter = presenter;
     }
 
     @OnClick(R.id.install_apk)
     public void onViewClick(View view) {
-
+        mPresenter.installApk();
     }
 }

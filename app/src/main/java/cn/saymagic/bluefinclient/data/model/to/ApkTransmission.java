@@ -14,6 +14,8 @@ public class ApkTransmission implements Parcelable {
 
     public String apkUrl;
 
+    public String md5;
+
     public String getPackageName() {
         return packageName;
     }
@@ -38,6 +40,16 @@ public class ApkTransmission implements Parcelable {
         this.apkUrl = apkUrl;
     }
 
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
+    }
+
+    public ApkTransmission() {
+    }
 
     @Override
     public int describeContents() {
@@ -49,18 +61,17 @@ public class ApkTransmission implements Parcelable {
         dest.writeString(this.packageName);
         dest.writeString(this.name);
         dest.writeString(this.apkUrl);
-    }
-
-    public ApkTransmission() {
+        dest.writeString(this.md5);
     }
 
     protected ApkTransmission(Parcel in) {
         this.packageName = in.readString();
         this.name = in.readString();
         this.apkUrl = in.readString();
+        this.md5 = in.readString();
     }
 
-    public static final Parcelable.Creator<ApkTransmission> CREATOR = new Parcelable.Creator<ApkTransmission>() {
+    public static final Creator<ApkTransmission> CREATOR = new Creator<ApkTransmission>() {
         @Override
         public ApkTransmission createFromParcel(Parcel source) {
             return new ApkTransmission(source);

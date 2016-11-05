@@ -38,7 +38,7 @@ public class ApkItemViewPresenter implements ApkItemViewContract.IApkItemViewPre
                         UIController.showToast(mContext, mContext.getString(R.string.error_no_intent));
                     }
                 } else {
-                    UIController.openDownloadActivity(mContext, mApk.toTransmission());
+                    UIController.openDownloadActivity(mContext, mApk);
                 }
                 break;
             }

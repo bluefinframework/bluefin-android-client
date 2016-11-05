@@ -7,10 +7,10 @@ import rx.Observable;
 /**
  * Created by saymagic on 16/10/26.
  */
-public interface DownloadContract {
+public interface DownloadPerformContract {
 
     Observable<Float> download(String url, OutputStream outputStream);
 
-    DownloadContract URL_DOWNLOADER = new UrlConnectionDownloader();
+    DownloadPerformContract URL_DOWNLOADER = new UrlConnectionDownloader();
 
 }

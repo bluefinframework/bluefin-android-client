@@ -3,6 +3,7 @@ package cn.saymagic.bluefinclient.ui.apk;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,7 @@ public class ApkItemView extends FrameLayout implements IAdapterView<Apk>, ApkIt
         this.mApk = apk;
         ImageLoaderContract.INSTANCE.load(getContext(),
                 apk.icon,
-                TextDrawable.builder().buildRect(String.valueOf(apk.name.charAt(0)), Color.GRAY),
+                TextDrawable.builder().buildRect(String.valueOf(TextUtils.isEmpty(apk.name) ? "" : apk.name.charAt(0)), Color.GRAY),
                 apkIcon);
 
         apkName.setText(apk.name + " [ " + apk.versionName + " / " + apk.versionCode + "]");

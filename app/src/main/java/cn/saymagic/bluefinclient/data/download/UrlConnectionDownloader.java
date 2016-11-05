@@ -22,11 +22,10 @@ public class UrlConnectionDownloader extends BaseDownloader {
 
     @Override
     public Observable<Float> download(final String downloadUrl, final OutputStream outputStream) {
-        final String a = "http://pkg-mt1.fir.im/19d5ed0f0a738ece75ab4b88454d3f7ccc0088c9.apk?filename=scanmaster_v1.0.5_2016-08-22_fir.apk_1.0.5.apk";
         return Observable.create(new Observable.OnSubscribe<Float>() {
             @Override
             public void call(Subscriber<? super Float> subscriber) {
-                if (TextUtils.isEmpty(a)) {
+                if (TextUtils.isEmpty(downloadUrl)) {
                     subscriber.onError(new IllegalStateException());
                     return;
                 }
@@ -35,7 +34,7 @@ public class UrlConnectionDownloader extends BaseDownloader {
                 InputStream inputStream = null;
                 int length = 0;
                 try {
-                    url = new URL(a);
+                    url = new URL(downloadUrl);
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setConnectTimeout(10000);
                     connection.setReadTimeout(10000);
@@ -53,6 +52,7 @@ public class UrlConnectionDownloader extends BaseDownloader {
                     byte[] buffer = new byte[1024];
                     do {
                         int readSize = inputStream.read(buffer);
+                        Thread.sleep(10);
                         if (readSize == -1) {
                             break;
                         }

@@ -28,8 +28,8 @@ android {
         applicationId "cn.saymagic.bluefinclient"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 4
-        versionName "2.2.2"
+        versionCode 1
+        versionName "2.2.1"
     }
 
 

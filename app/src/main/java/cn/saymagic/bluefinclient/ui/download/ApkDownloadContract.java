@@ -18,6 +18,9 @@ public interface ApkDownloadContract {
         void onStartDownload();
 
         void onDownloadError(String errorMsg);
+
+        void doFinish();
+
     }
 
     interface IDownloadPresenter extends IPresenter {

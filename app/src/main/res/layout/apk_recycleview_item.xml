@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/material_8dp"
+            android:layout_margin="@dimen/material_8dp"
             android:text="@string/apk_more_version" />
     </RelativeLayout>
 </merge>
