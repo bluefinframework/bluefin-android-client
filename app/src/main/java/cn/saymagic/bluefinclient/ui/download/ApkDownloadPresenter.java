@@ -5,8 +5,8 @@ import android.content.Context;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.concurrent.TimeUnit;
 
 import cn.saymagic.bluefinclient.data.download.DownloadPerformContract;
 import cn.saymagic.bluefinclient.data.download.DownloadSaveContract;
@@ -75,12 +75,13 @@ public class ApkDownloadPresenter implements ApkDownloadContract.IDownloadPresen
             FileOutputStream fos = new FileOutputStream(mDownloadingFile);
             Subscription subscription = mDownloader
                     .download(mApk.apkUrl, fos)
+                    .debounce(10, TimeUnit.MILLISECONDS)
                     .compose(new BackgroundJobTransformer())
                     .subscribe(new DownloadSubscriber());
             mCompositeSubscription.add(subscription);
         } catch (FileNotFoundException e) {
             Logger.logException(TAG, e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Logger.logException(TAG, e);
         }
     }

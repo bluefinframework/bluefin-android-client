@@ -49,10 +49,9 @@ public class UrlConnectionDownloader extends BaseDownloader {
                     inputStream = connection.getInputStream();
                     length = connection.getContentLength();
                     int sizeRead = 0;
-                    byte[] buffer = new byte[1024];
+                    byte[] buffer = new byte[4096];
                     do {
                         int readSize = inputStream.read(buffer);
-                        Thread.sleep(10);
                         if (readSize == -1) {
                             break;
                         }
